@@ -24,7 +24,12 @@ evals<-read.csv("data/evals.csv", row.names=1)
 1.  Visualize the distribution of `score` in the dataframe `evals`.
 
 ```{r viz-score}
-# add code here
+ggplot(data = evals, aes(x = cls_perc_eval)) +
+  geom_histogram(binwidth = 5) + 
+  labs( x = "Age",
+        y = NULL)
+mean(evals$cls_perc_eval)
+median(evals$cls_perc_eval)
 ```
 
 *Add your other details and narratives here.*
@@ -32,7 +37,12 @@ evals<-read.csv("data/evals.csv", row.names=1)
 2.  Visualize and describe the relationship between `score` and `bty_avg` using `geom_point()` to represent the data. 
 
 ```{r scatterplot}
-# add code here
+score_bty_fit <- ggplot(data = evals, aes(x = cls_perc_eval, y = bty_avg)) +
+  geom_point() +
+  geom_smooth(method = lm,
+              se = FALSE)  
+ 
+ 
 ```
 
 *Add your narrative and other details here.*
@@ -41,24 +51,28 @@ evals<-read.csv("data/evals.csv", row.names=1)
 
 1. Fit a linear model called `score_bty_fit` to predict average professor evaluation `score` from average beauty rating (`bty_avg`). Print the regression output using `tidy()`.
 
-```{r fit-score_bty_fit, eval = FALSE}
+```{r fit-score_bty_fit, }
 # remove eval = FALSE from the code chunk options after filling in the blanks
 score_bty_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(___ ~ ___, data = ___)
+  fit(bty_avg ~ cls_perc_eval, data = evals)
 ```
 
-```{r tidy-score_bty_fit, eval = FALSE}
+```{r tidy-score_bty_fit, }
 # remove eval = FALSE from the code chunk options after filling in the blanks
-tidy(___)
+tidy(score_bty_fit)
 ```
 
-*Add your linear model here. Don't worry too much about notation, you can use things like score-hat.*
+y = 3.381 - 0.013
 
 2. Plot the data again using `geom_jitter()`, and add the regression line.
 
 ```{r viz-score_bty_fit,eval=FALSE}
-# add your plot here. Hint, you can add the regression line using geom_smooth()
+ ggplot(data = evals, aes(x = cls_perc_eval, y = bty_avg)) +
+  geom_point() +
+  geom_jitter( method = lm
+              
+             )  
 ```
 
 3. Interpret the slope of the linear model in context of the data.
